@@ -43,12 +43,10 @@ if st.button("Process JSON"):
 
             # Display the processed JSON
             st.subheader("Processed JSON:")
-            st.code(output_json, language="json")
-
             # Download button
             st.download_button("Download Processed JSON", data=output_json, file_name="processed.json",
                                mime="application/json")
-
+            st.code(output_json, language="json")
         except json.JSONDecodeError:
             st.error("Invalid JSON format. Please check your input.")
     else:
