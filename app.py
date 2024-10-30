@@ -1,6 +1,12 @@
+from zoneinfo import ZoneInfo
+
 import streamlit as st
 import json
 from datetime import datetime, timedelta, timezone
+
+import zoneinfo
+
+TIMEZONE = zoneinfo.ZoneInfo("Europe/Brussels")
 
 
 def get_departure_time(json_data: dict) -> datetime:
@@ -44,13 +50,16 @@ def update_datetimes(data, base_datetime=None):
 
 st.title("JSON DateTime Modifier with Base Date Option")
 
-input_json = st.text_area("Paste your JSON here:")
+with st.form("JSON"):
+    input_json = st.text_area("Paste your JSON here:")
 
-base_date = st.date_input("New start date:", datetime.now())
-base_time = st.time_input("New start time", datetime.now() + timedelta(hours=1))
-base_datetime = datetime.combine(base_date, base_time)
+    base_date = st.date_input("New start date:", datetime.now(tz=TIMEZONE))
+    base_time = st.time_input("New start time", datetime.now(tz=TIMEZONE))
+    base_datetime = datetime.combine(base_date, base_time)
 
-if st.button("Process JSON"):
+    submit = st.form_submit_button("Process JSON")
+
+if submit:
     if input_json:
         try:
             data = json.loads(input_json)
