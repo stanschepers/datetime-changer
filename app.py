@@ -1,49 +1,65 @@
 import streamlit as st
 import json
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 
-# Function to recursively update datetimes in JSON
-def update_datetimes(data):
-    if isinstance(data, dict):
-        return {key: update_datetimes(value) for key, value in data.items()}
-    elif isinstance(data, list):
-        return [update_datetimes(item) for item in data]
-    elif isinstance(data, str):
-        try:
-            # Parse strings formatted as '%Y-%m-%dT%H:%M:%S'
-            parsed_date = datetime.strptime(data, "%Y-%m-%dT%H:%M:%S")
-            # Update the date to today's date, keeping the time
-            new_date = datetime.now().replace(hour=parsed_date.hour,
-                                              minute=parsed_date.minute,
-                                              second=parsed_date.second)
-            return new_date.strftime("%Y-%m-%dT%H:%M:%S")
-        except ValueError:
-            return data
-    else:
+def get_departure_time(json_data: dict) -> datetime:
+    departure_time = json_data["route"][0]["timingInfo"]["departureTime"]["notRounded"].get("commercialPlanned",
+                                                                                            None).get("actual")
+    if departure_time is None:
+        departure_time = json_data["route"][0]["timingInfo"]["departureTime"]["notRounded"].get("lastPlanned",
+                                                                                                None).get("actual")
+    return datetime.strptime(departure_time, "%Y-%m-%dT%H:%M:%S")
+
+
+def update_datetimes(data, base_datetime=None):
+    original_departure_datetime = get_departure_time(data)
+    base_offset = base_datetime - original_departure_datetime if base_datetime else timedelta()
+
+    def recursive_update(data, first_datetime=None, key=None):
+        if isinstance(data, dict):
+            return {key: recursive_update(value, first_datetime, key=key) for key, value in data.items()}
+        elif isinstance(data, list):
+            return [recursive_update(item, first_datetime, key=key) for item in data]
+        elif isinstance(data, str):
+            try:
+                parsed_date = datetime.strptime(data, "%Y-%m-%dT%H:%M:%S")
+                if key != "departureDate":
+                    adjusted_date = parsed_date + base_offset
+                else:
+                    adjusted_date = parsed_date.replace(
+                        year=base_datetime.year,
+                        month=base_datetime.month,
+                        day=base_datetime.day,
+                    )
+                return adjusted_date.strftime("%Y-%m-%dT%H:%M:%S")
+            except ValueError:
+                return data
+            except OverflowError as e:
+                st.error(f"Please choose a departure date equal or after the original departure date: {e}")
         return data
 
+    return recursive_update(data)
 
-# Streamlit app layout
-st.title("JSON DateTime Modifier")
 
-# Text area for inputting JSON
+st.title("JSON DateTime Modifier with Base Date Option")
+
 input_json = st.text_area("Paste your JSON here:")
+use_custom_date = st.checkbox("Use new departure date and time")
+base_datetime = None
 
-# Button to trigger the processing
+if use_custom_date:
+    base_date = st.date_input("Departure date:", datetime.now())
+    base_time = st.time_input("Departure time", datetime.now() - timedelta(hours=1))
+    base_datetime = datetime.combine(base_date, base_time)
+
 if st.button("Process JSON"):
     if input_json:
         try:
-            # Parse input JSON
             data = json.loads(input_json)
-            # Process the JSON to update the datetimes
-            updated_data = update_datetimes(data)
-            # Convert the updated data back to JSON format
+            updated_data = update_datetimes(data, base_datetime)
             output_json = json.dumps(updated_data, indent=4)
-
-            # Display the processed JSON
             st.subheader("Processed JSON:")
-            # Download button
             st.download_button("Download Processed JSON", data=output_json, file_name="processed.json",
                                mime="application/json")
             st.code(output_json, language="json")
