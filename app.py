@@ -45,13 +45,10 @@ def update_datetimes(data, base_datetime=None):
 st.title("JSON DateTime Modifier with Base Date Option")
 
 input_json = st.text_area("Paste your JSON here:")
-use_custom_date = st.checkbox("Use new departure date and time")
-base_datetime = None
 
-if use_custom_date:
-    base_date = st.date_input("Departure date:", datetime.now())
-    base_time = st.time_input("Departure time", datetime.now() - timedelta(hours=1))
-    base_datetime = datetime.combine(base_date, base_time)
+base_date = st.date_input("New start date:", datetime.now())
+base_time = st.time_input("New start time", datetime.now() + timedelta(hours=1))
+base_datetime = datetime.combine(base_date, base_time)
 
 if st.button("Process JSON"):
     if input_json:
