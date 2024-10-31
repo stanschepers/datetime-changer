@@ -1,5 +1,3 @@
-from zoneinfo import ZoneInfo
-
 import streamlit as st
 import json
 from datetime import datetime, timedelta, timezone
@@ -48,7 +46,7 @@ def update_datetimes(data, base_datetime=None):
     return recursive_update(data)
 
 
-st.title("JSON DateTime Modifier with Base Date Option")
+st.title("JSON datetime modifier")
 
 with st.form("JSON"):
     input_json = st.text_area("Paste your JSON here:")
