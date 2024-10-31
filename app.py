@@ -8,11 +8,15 @@ TIMEZONE = zoneinfo.ZoneInfo("Europe/Brussels")
 
 
 def get_departure_time(json_data: dict) -> datetime:
-    departure_time = json_data["route"][0]["timingInfo"]["departureTime"]["notRounded"].get("commercialPlanned",
-                                                                                            None).get("actual")
-    if departure_time is None:
-        departure_time = json_data["route"][0]["timingInfo"]["departureTime"]["notRounded"].get("lastPlanned",
+    try:
+        departure_time = json_data["route"][0]["timingInfo"]["departureTime"]["notRounded"].get("commercialPlanned",
                                                                                                 None).get("actual")
+        if departure_time is None:
+            departure_time = json_data["route"][0]["timingInfo"]["departureTime"]["notRounded"].get("lastPlanned",
+                                                                                                    None).get("actual")
+    except KeyError:
+        st.warning("No initial timing, using today")
+        return datetime.today()
     return datetime.strptime(departure_time, "%Y-%m-%dT%H:%M:%S")
 
 
