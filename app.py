@@ -1,10 +1,18 @@
-import streamlit as st
 import json
-from datetime import datetime, timedelta, timezone
-
+import os
 import zoneinfo
+from datetime import datetime, timedelta
+
+import streamlit as st
 
 TIMEZONE = zoneinfo.ZoneInfo("Europe/Brussels")
+
+SCENARIOS_DIR = "scenarios"
+
+st.set_page_config(initial_sidebar_state='collapsed')
+
+if "input_json" not in st.session_state:
+    st.session_state["input_json"] = ""
 
 
 def get_departure_time(json_data: dict) -> datetime:
@@ -50,16 +58,53 @@ def update_datetimes(data, base_datetime=None):
     return recursive_update(data)
 
 
+def list_json_files(base_dir):
+    structure = {}
+    for root, _, files in os.walk(base_dir):
+        subdir = os.path.relpath(root, base_dir)
+        json_files = [file for file in files if file.endswith(".json")]
+        if json_files:
+            structure[subdir] = json_files
+    return structure
+
+
+with st.sidebar:
+    st.subheader("Available Scenarios")
+    file_structure = list_json_files(SCENARIOS_DIR)
+
+    selected_file = None
+    for subdir, files in file_structure.items():
+        with st.expander(subdir.replace("_", " ").capitalize()):
+            for file in files:
+                if st.button(file, key=f"{subdir}/{file}"):
+                    selected_file = os.path.join(SCENARIOS_DIR, subdir, file)
+
+    if selected_file:
+        try:
+            with open(selected_file, "r") as f:
+                file_content = f.read()
+                st.session_state["input_json"] = file_content
+        except Exception as e:
+            st.error(f"Could not load the file: {e}")
+
+# Load the selected file into the text area if available
+# input_json = st.session_state.get("selected_json", "")
+# print(input_json)
+
+
 st.title("JSON datetime modifier")
 
-with st.form("JSON"):
-    input_json = st.text_area("Paste your JSON here:")
-
-    base_date = st.date_input("New start date:", datetime.now(tz=TIMEZONE))
-    base_time = st.time_input("New start time", datetime.now(tz=TIMEZONE))
-    base_datetime = datetime.combine(base_date, base_time)
-
-    submit = st.form_submit_button("Process JSON")
+json_form = st.form("JSON")
+input_json = json_form.text_area(
+    "Paste your JSON here:",
+    value=st.session_state["input_json"],
+    key="input_json_area",
+    height=450,
+)
+base_date = json_form.date_input("New start date:", datetime.now(tz=TIMEZONE))
+base_time = json_form.time_input("New start time", datetime.now(tz=TIMEZONE))
+base_datetime = datetime.combine(base_date, base_time)
+submit = json_form.form_submit_button("Process JSON")
 
 if submit:
     if input_json:
