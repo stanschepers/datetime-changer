@@ -1,0 +1,358 @@
+{
+  "isInitialVersion": false,
+  "header": {
+    "incomingMessage": {
+      "messageId": null,
+      "messageDateTime": "2024-12-16T04:32:16.4004874"
+    },
+    "currentMessage": {
+      "messageId": {
+        "previous": null,
+        "actual": "e7b34473-6a46-4bd1-9a8c-eceb9bdf6571"
+      },
+      "messageDateTime": "2024-12-16T04:32:16.9614442"
+    }
+  },
+  "train": {
+    "trainKey": {
+      "trainNumber": 2980,
+      "departureDate": "2024-12-19T00:00:00",
+      "circulationType": "EmptyItinerary",
+      "discriminator": 0,
+      "natureCode": "HE"
+    },
+    "trainStatus": {
+      "actual": "Scheduled",
+      "previous": null
+    },
+    "trainGroup": {
+      "actual": "Passenger",
+      "previous": null
+    },
+    "trainPosition": null,
+    "numberOfUpdates": {
+      "total": 1
+    }
+  },
+  "changedWithPreviousVersion": {
+    "isRouteChanged": true,
+    "isTrackChanged": true,
+    "isLineSectionChanged": true,
+    "isProgressStatusChanged": false,
+    "isBoardingStatusChanged": false,
+    "isOnHoldStatusChanged": false,
+    "isTimingLastPlannedChanged": true,
+    "isTimingExpectedChanged": true,
+    "isStopTypeChanged": true,
+    "isReferenceChanged": false,
+    "isOccupancyChanged": false
+  },
+  "route": [
+    {
+      "itineraryPointKey": {
+        "ptcarId": 76,
+        "uicCode": "8824075",
+        "occurenceCreationNumber": null
+      },
+      "sequenceInfo": {
+        "infrabelOrderNumber": {
+          "lastPlanned": {
+            "previous": null,
+            "actual": 101
+          }
+        }
+      },
+      "itineraryPointInfo": {
+        "progressStatus": {
+          "actual": "NotPassed",
+          "previous": null
+        },
+        "referenceStatus": null,
+        "planningStatus": {
+          "actual": "Planned",
+          "previous": null
+        },
+        "onHoldStatus": null
+      },
+      "timingInfo": {
+        "arrivalTime": null,
+        "departureTime": {
+          "rounded": null,
+          "notRounded": {
+            "expected": {
+              "previous": null,
+              "actual": "2024-12-19T11:07:00"
+            },
+            "commercialPlanned": {
+              "previous": null,
+              "actual": "2024-12-19T11:07:00"
+            },
+            "lastPlanned": {
+              "previous": null,
+              "actual": "2024-12-19T11:07:00"
+            }
+          },
+          "delay": {
+            "lastPlanned": {
+              "previous": null,
+              "actual": "00:00:00"
+            }
+          }
+        }
+      },
+      "stopInfo": {
+        "stopType": {
+          "commercialPlanned": {
+            "actual": "PassingPoint",
+            "previous": null
+          },
+          "lastPlanned": {
+            "actual": "PassingPoint",
+            "previous": null
+          },
+          "expected": null
+        },
+        "action": {
+          "operational": {
+            "commercialPlanned": {
+              "actual": "Start",
+              "previous": null
+            },
+            "lastPlanned": {
+              "actual": "Start",
+              "previous": null
+            },
+            "expected": null
+          }
+        },
+        "restrictions": {
+          "operational": {
+            "commercialPlanned": {
+              "actual": "None",
+              "previous": null
+            },
+            "lastPlanned": {
+              "actual": "None",
+              "previous": null
+            },
+            "expected": null
+          }
+        },
+        "operationCode": {
+          "commercialPlanned": {
+            "actual": "Undefined",
+            "previous": null
+          },
+          "lastPlanned": {
+            "actual": "Undefined",
+            "previous": null
+          },
+          "expected": null
+        },
+        "pointType": {
+          "commercialPlanned": {
+            "actual": "Stop",
+            "previous": null
+          },
+          "lastPlanned": {
+            "actual": "Stop",
+            "previous": null
+          },
+          "expected": null
+        }
+      },
+      "ptcarInfo": {
+        "gpsLongitude": 4.443562,
+        "gpsLatitude": 51.222878,
+        "gpsAltitude": null
+      },
+      "infrastructureInfo": {
+        "lineSectionId": {
+          "commercialPlanned": {
+            "previous": null,
+            "actual": -1
+          },
+          "lastPlanned": {
+            "previous": null,
+            "actual": -1
+          }
+        },
+        "lineId": {
+          "commercialPlanned": null,
+          "lastPlanned": null
+        },
+        "lineName": {
+          "commercialPlanned": null,
+          "lastPlanned": null
+        },
+        "trackSectionId": {
+          "commercialPlanned": null,
+          "lastPlanned": null
+        },
+        "trackName": {
+          "commercialPlanned": {
+            "previous": null,
+            "actual": ""
+          },
+          "lastPlanned": {
+            "previous": null,
+            "actual": ""
+          }
+        }
+      }
+    },
+    {
+      "itineraryPointKey": {
+        "ptcarId": 76,
+        "uicCode": "8824075",
+        "occurenceCreationNumber": null
+      },
+      "sequenceInfo": {
+        "infrabelOrderNumber": {
+          "lastPlanned": {
+            "previous": null,
+            "actual": 102
+          }
+        }
+      },
+      "itineraryPointInfo": {
+        "progressStatus": {
+          "actual": "NotPassed",
+          "previous": null
+        },
+        "referenceStatus": null,
+        "planningStatus": {
+          "actual": "Planned",
+          "previous": null
+        },
+        "onHoldStatus": null
+      },
+      "timingInfo": {
+        "arrivalTime": {
+          "rounded": null,
+          "notRounded": {
+            "expected": {
+              "previous": null,
+              "actual": "2024-12-19T11:08:00"
+            },
+            "commercialPlanned": {
+              "previous": null,
+              "actual": "2024-12-19T11:08:00"
+            },
+            "lastPlanned": {
+              "previous": null,
+              "actual": "2024-12-19T11:08:00"
+            }
+          },
+          "delay": {
+            "lastPlanned": {
+              "previous": null,
+              "actual": "00:00:00"
+            }
+          }
+        },
+        "departureTime": null
+      },
+      "stopInfo": {
+        "stopType": {
+          "commercialPlanned": {
+            "actual": "PassingPoint",
+            "previous": null
+          },
+          "lastPlanned": {
+            "actual": "PassingPoint",
+            "previous": null
+          },
+          "expected": null
+        },
+        "action": {
+          "operational": {
+            "commercialPlanned": {
+              "actual": "End",
+              "previous": null
+            },
+            "lastPlanned": {
+              "actual": "End",
+              "previous": null
+            },
+            "expected": null
+          }
+        },
+        "restrictions": {
+          "operational": {
+            "commercialPlanned": {
+              "actual": "None",
+              "previous": null
+            },
+            "lastPlanned": {
+              "actual": "None",
+              "previous": null
+            },
+            "expected": null
+          }
+        },
+        "operationCode": {
+          "commercialPlanned": {
+            "actual": "Undefined",
+            "previous": null
+          },
+          "lastPlanned": {
+            "actual": "Undefined",
+            "previous": null
+          },
+          "expected": null
+        },
+        "pointType": {
+          "commercialPlanned": {
+            "actual": "Stop",
+            "previous": null
+          },
+          "lastPlanned": {
+            "actual": "Stop",
+            "previous": null
+          },
+          "expected": null
+        }
+      },
+      "ptcarInfo": {
+        "gpsLongitude": 4.443562,
+        "gpsLatitude": 51.222878,
+        "gpsAltitude": null
+      },
+      "infrastructureInfo": {
+        "lineSectionId": {
+          "commercialPlanned": {
+            "previous": null,
+            "actual": -1
+          },
+          "lastPlanned": {
+            "previous": null,
+            "actual": -1
+          }
+        },
+        "lineId": {
+          "commercialPlanned": null,
+          "lastPlanned": null
+        },
+        "lineName": {
+          "commercialPlanned": null,
+          "lastPlanned": null
+        },
+        "trackSectionId": {
+          "commercialPlanned": null,
+          "lastPlanned": null
+        },
+        "trackName": {
+          "commercialPlanned": {
+            "previous": null,
+            "actual": ""
+          },
+          "lastPlanned": {
+            "previous": null,
+            "actual": ""
+          }
+        }
+      }
+    }
+  ]
+}
